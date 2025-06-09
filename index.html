@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PepperCraft - 高级Minecraft服务器</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullpage.js/dist/fullpage.min.css">
+    <style>
+        :root {
+            --pepper-color: #55ff55;
+            --craft-color: #5555ff;
+            --dark-bg: #121212;
+            --section-padding: 2rem;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: #f0f0f0;
+            overflow-x: hidden;
+        }
+        
+        .section {
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            padding: var(--section-padding);
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 0;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Minecraft', sans-serif;
+            font-size: 5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        }
+        
+        .pepper {
+            color: var(--pepper-color);
+            text-shadow: 0 0 15px var(--pepper-color);
+        }
+        
+        .craft {
+            color: var(--craft-color);
+            text-shadow: 0 0 15px var(--craft-color);
+        }
+        
+        .btn-minecraft {
+            background: linear-gradient(145deg, #55ff55, #5555ff);
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(85, 255, 85, 0.3);
+        }
+        
+        .btn-minecraft:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(85, 255, 85, 0.5);
+        }
+        
+        .feature-card {
+            background: rgba(30, 30, 40, 0.85);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: 100%;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(100, 100, 200, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(85, 255, 85, 0.2);
+        }
+        
+        .stats-container {
+            background: rgba(20, 20, 30, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 0 30px rgba(85, 85, 255, 0.2);
+            border: 1px solid rgba(85, 85, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--pepper-color);
+        }
+        
+        .stat-label {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+        
+        .server-ip {
+            background: rgba(20, 20, 30, 0.9);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border: 2px solid var(--craft-color);
+            display: inline-block;
+            margin: 1rem 0;
+        }
+        
+        .minecraft-input {
+            background: rgba(30, 30, 40, 0.7);
+            border: 2px solid var(--craft-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .minecraft-input:focus {
+            outline: none;
+            border-color: var(--pepper-color);
+            box-shadow: 0 0 10px rgba(85, 255, 85, 0.5);
+        }
+        
+        .screenshot {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .screenshot:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(85, 255, 85, 0.3);
+        }
+        
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(30, 30, 40, 0.8);
+            color: white;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(100, 100, 200, 0.3);
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(145deg, #55ff55, #5555ff);
+            color: white;
+        }
+        
+        .footer {
+            background: rgba(10, 10, 20, 0.95);
+            padding: 1.5rem;
+            border-top: 1px solid rgba(85, 85, 255, 0.1);
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 992px) {
+            .logo {
+                font-size: 4rem;
+            }
+            .stat-value {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3rem;
+            }
+            .server-ip {
+                font-size: 1.2rem;
+                padding: 0.8rem 1.5rem;
+            }
+        }
+        
+        @media (min-width: 2000px) {
+            :root {
+                --section-padding: 4rem;
+            }
+            .logo {
+                font-size: 7rem;
+            }
+            h1 {
+                font-size: 4rem;
+            }
+            h2 {
+                font-size: 3rem;
+            }
+            .stat-value {
+                font-size: 4rem;
+            }
+            .feature-card {
+                padding: 2.5rem;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: rgba(10, 10, 20, 0.8); backdrop-filter: blur(10px);">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span class="pepper">Pepper</span><span class="craft">Craft</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">特色</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#stats">数据</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#gallery">画廊</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#join">加入</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 全屏页面部分 -->
+    <div id="fullpage">
+        <!-- 首页 -->
+        <div class="section" id="home" style="background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+            <div class="overlay"></div>
+            <div class="content d-flex flex-column justify-content-center align-items-center text-center">
+                <h1 class="logo"><span class="pepper">Pepper</span><span class="craft">Craft</span></h1>
+                <p class="lead fs-3 mb-4" style="max-width: 800px;">探索无限可能，打造属于你的方块世界</p>
+                <p class="mb-5 fs-5" style="max-width: 700px;">加入我们史诗级的Minecraft冒险，体验前所未有的多人游戏乐趣。超过100种独特玩法等你发现！</p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <button class="btn btn-minecraft btn-lg pulse">立即加入</button>
+                    <button class="btn btn-outline-light btn-lg">观看预告片</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 特色页面 -->
+        <div class="section" id="features" style="background-image: url('https://images.unsplash.com/photo-1560672657-a0431178403f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+            <div class="overlay"></div>
+            <div class="content">
+                <h2 class="text-center mb-5"><span class="pepper">服务器</span> <span class="craft">特色</span></h2>
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-dragon fs-1 mb-3" style="color: var(--pepper-color);"></i>
+                                <h3>史诗任务</h3>
+                            </div>
+                            <p>超过200小时的原创剧情任务，包含独特NPC互动、地下城探索和史诗级Boss战。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-cubes fs-1 mb-3" style="color: var(--craft-color);"></i>
+                                <h3>自定义物品</h3>
+                            </div>
+                            <p>500+种自定义武器、盔甲和工具，每种都有独特属性和特效，完全兼容原版游戏机制。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-city fs-1 mb-3" style="color: var(--pepper-color);"></i>
+                                <h3>玩家城市</h3>
+                            </div>
+                            <p>建立你自己的城市，招募居民，发展经济，与其他城市贸易或竞争。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-users fs-1 mb-3" style="color: var(--craft-color);"></i>
+                                <h3>公会系统</h3>
+                            </div>
+                            <p>创建或加入公会，参与公会战争、团队副本和赛季性竞技活动。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-magic fs-1 mb-3" style="color: var(--pepper-color);"></i>
+                                <h3>魔法系统</h3>
+                            </div>
+                            <p>学习8种魔法学派，掌握100+种法术，组合元素创造独特效果。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="feature-card">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-sync-alt fs-1 mb-3" style="color: var(--craft-color);"></i>
+                                <h3>赛季重置</h3>
+                            </div>
+                            <p>每3个月开启新赛季，保留核心进度，重置世界地图，带来全新体验。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 服务器数据页面 -->
+        <div class="section" id="stats" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+            <div class="overlay"></div>
+            <div class="content">
+                <h2 class="text-center mb-5"><span class="pepper">实时</span> <span class="craft">数据</span></h2>
+                <div class="stats-container">
+                    <div class="row text-center">
+                        <div class="col-md-3 col-6 mb-4">
+                            <div class="stat-value" id="online-players">1,243</div>
+                            <div class="stat-label">在线玩家</div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-4">
+                            <div class="stat-value" id="total-players">58,921</div>
+                            <div class="stat-label">总玩家数</div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-4">
+                            <div class="stat-value" id="uptime">99.8%</div>
+                            <div class="stat-label">运行时间</div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-4">
+                            <div class="stat-value" id="servers">7</div>
+                            <div class="stat-label">子服务器</div>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <h4 class="text-center mb-4">当前热门游戏模式</h4>
+                        <div class="progress mb-3" style="height: 30px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 45%;">SkyBlock 45%</div>
+                        </div>
+                        <div class="progress mb-3" style="height: 30px;">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 30%;">生存战争 30%</div>
+                        </div>
+                        <div class="progress mb-3" style="height: 30px;">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 15%;">RPG世界 15%</div>
+                        </div>
+                        <div class="progress mb-3" style="height: 30px;">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 10%;">创意工坊 10%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 画廊页面 -->
+        <div class="section" id="gallery" style="background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);">
+            <div class="overlay"></div>
+            <div class="content">
+                <h2 class="text-center mb-5"><span class="pepper">玩家</span> <span class="craft">创作</span></h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="screenshot" style="background-image: url('https://images.unsplash.com/photo-1607434472257-d9f8e57a643d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="screenshot" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="screenshot" style="background-image: url('https://images.unsplash.com/photo-1531315630201-bb15abeb1653?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="screenshot" style="background-image: url('https://images.unsplash.com/photo-1560991404-56e68225d2c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); height: 350px;"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="screenshot" style="background-image: url('https://images.unsplash.com/photo-1602526430780-782d6b1783fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); height: 350px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 加入页面 -->
+        <div class="section" id="join" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+            <div class="overlay"></div>
+            <div class="content text-center">
+                <h2 class="mb-4"><span class="pepper">加入</span> <span class="craft">我们</span></h2>
+                <p class="lead mb-4">现在加入PepperCraft，开始你的冒险之旅！</p>
+                
+                <div class="server-ip mb-5">play.peppercraft.com</div>
+                
+                <div class="d-flex justify-content-center mb-5">
+                    <div class="social-icon">
+                        <i class="fab fa-discord"></i>
+                    </div>
+                    <div class="social-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+                
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h4 class="mb-3">订阅更新</h4>
+                        <form>
+                            <input type="email" class="minecraft-input" placeholder="你的电子邮箱">
+                            <button type="submit" class="btn btn-minecraft w-100">订阅通知</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer text-center">
+        <div class="container">
+            <p>© 2023 PepperCraft Minecraft Server. 与Mojang Studios无关。保留所有权利。</p>
+            <p class="mb-0">Designed with <i class="fas fa-heart text-danger"></i> for Minecraft Community</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullpage.js/dist/fullpage.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 初始化全屏滚动
+            new fullpage('#fullpage', {
+                autoScrolling: true,
+                scrollHorizontally: true,
+                navigation: true,
+                navigationPosition: 'right',
+                responsiveWidth: 768,
+                onLeave: function(origin, destination, direction) {
+                    // 更新导航栏活动状态
+                    $('.nav-link').removeClass('active');
+                    $(`.nav-link[href="#${destination.anchor}"]`).addClass('active');
+                }
+            });
+            
+            // 导航栏点击滚动
+            $('.nav-link').on('click', function(e) {
+                e.preventDefault();
+                const target = $(this).attr('href');
+                fullpage_api.moveTo(target.substring(1));
+            });
+            
+            // 模拟动态数据更新
+            setInterval(() => {
+                const players = parseInt($('#online-players').text().replace(',', ''));
+                const newPlayers = players + Math.floor(Math.random() * 10) - 3;
+                $('#online-players').text(Math.max(1200, newPlayers).toLocaleString());
+                
+                const total = parseInt($('#total-players').text().replace(',', ''));
+                $('#total-players').text((total + Math.floor(Math.random() * 5)).toLocaleString());
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
